@@ -25,9 +25,12 @@ async function signup(email) {
   return { cookie, email, password, id: r.data.user.id };
 }
 try {
-  check((await call('/api/workspace')).response.status === 401, 'Anonymous workspace access is rejected');
+  const guest = await call('/api/workspace');
+  check(guest.response.ok && guest.data.guest === true, 'Anonymous visitors can load the public workspace');
+  check(['projects','evidence','experiments','missions','orders','applications'].every(key => guest.data[key].length === 0) && !guest.data.user.admin && guest.data.operations === null, 'Public workspace contains no private records or operator data');
+  check((await call('/api/workspace', { action: 'create_project' })).response.status === 401, 'Anonymous writes still require sign-in');
   const spoof = await call('/api/workspace', null, null, { 'oai-authenticated-user-id': 'fake', 'oai-authenticated-user-email': 'operator@example.test' });
-  check(spoof.response.status === 401, 'Old gateway identity headers do not authenticate users');
+  check(spoof.response.ok && spoof.data.guest && !spoof.data.user.admin, 'Forged gateway headers receive only the public workspace');
   const suffix = randomUUID().slice(0, 8);
   const first = await signup(`founder-${suffix}@example.test`), second = await signup(`other-${suffix}@example.test`);
   const operatorEmail = (process.env.ADMIN_EMAILS || '').split(',')[0]?.trim();
@@ -78,7 +81,7 @@ try {
   await client.execute({ sql: 'DELETE FROM stripe_events WHERE id=?', args: [event.id] });
   result = await call('/api/auth/sign-out', {}, first.cookie);
   check(result.response.ok, 'Sign-out succeeds');
-  check((await call('/api/workspace', null, first.cookie)).response.status === 401, 'Signed-out session no longer grants access');
+  check((await call('/api/workspace', null, first.cookie)).data.guest === true, 'Signed-out session receives only the public workspace');
   const login = await call('/api/auth/sign-in/email', { email: first.email, password: first.password });
   check(login.response.ok, 'Existing account can sign in with its password');
   const cookie = login.response.headers.getSetCookie().map(x => x.split(';')[0]).join('; ');

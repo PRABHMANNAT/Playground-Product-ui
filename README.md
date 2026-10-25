@@ -10,9 +10,9 @@ A workspace for researching a business idea, planning experiments, collecting ex
 
 ## Use the platform
 
-After the owner deploys the project, Vercel displays a website link, usually ending in `.vercel.app`. Open that link in your browser. Customers do not need GitHub, Vercel or any API keys.
+After the owner deploys the project, Vercel displays a website link, usually ending in `.vercel.app`. Open that link in your browser. Customers do not need GitHub, Vercel or any API keys. The workspace and company archive are visible to everyone without signing in.
 
-1. Click **Open workspace**, then **Create an account**. Enter your name, email and a password of at least 12 characters. If the site sends a verification email, open that email first.
+1. Click **Open workspace** to browse freely. When you want to save work, click **Sign in**, then **Create an account**. Enter your name, email and a password of at least 12 characters. If the site sends a verification email, open that email first.
 2. Click **New project**. Describe your idea, who it is for and what you want to learn.
 3. Open **Startup Graveyard** to read the historical cases. Follow a source and click **Save to a project** to keep a relevant finding.
 4. Open your project’s **Evidence** tab. Add a fact with a source, a hypothesis or an unanswered question. **Web research** is available when the owner connects OpenAI; review the sources it returns.
@@ -20,6 +20,8 @@ After the owner deploys the project, Vercel displays a website link, usually end
 6. Use **Human network** to request a specialist or customer review. The operator will review the request and agree on the scope and availability.
 7. Open your project’s **Decision report**. Record whether to pursue, change or pause the idea, and explain why. Download Markdown or choose **Print / Save PDF**.
 8. Use **Packages & billing** to request a paid pilot. Checkout appears after the operator scopes the request and payments are enabled. A request alone does not charge you.
+
+Public browsing shows an empty workspace and the curated archive. Creating projects, saving evidence, sending requests and exporting account records require sign-in. Existing customer records are never published in guest mode.
 
 Your work is saved to your account. You can return later, sign in and continue. **Settings → Export workspace** downloads your records as JSON. Operators can access customer records to deliver requested services. Permission to reuse anonymized findings starts off.
 

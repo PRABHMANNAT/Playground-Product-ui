@@ -21,9 +21,11 @@ export async function GET() {
         if (user.admin) {
             operations = { projects: (await database.prepare('SELECT * FROM projects ORDER BY created DESC LIMIT 200').all()).results, missions: (await database.prepare('SELECT m.*,p.name AS project_name FROM missions m JOIN projects p ON p.id=m.project ORDER BY m.created DESC LIMIT 200').all()).results, contributors: (await database.prepare('SELECT * FROM contributors ORDER BY created DESC LIMIT 200').all()).results, orders: (await database.prepare('SELECT o.*,p.name AS project_name FROM orders o JOIN projects p ON p.id=o.project ORDER BY o.created DESC LIMIT 200').all()).results };
         }
-        return Response.json({ user: { name: user.fullName || user.email.split('@')[0], email: user.email, admin: user.admin }, projects, evidence, experiments, missions, orders, applications, operations, capabilities: { ai: !!env.OPENAI_API_KEY, payments: !!env.STRIPE_SECRET_KEY && !!env.STRIPE_WEBHOOK_SECRET && env.SALES_ENABLED === 'true', adminConfigured: !!env.ADMIN_EMAILS }, currency: 'AUD' }, { headers: { 'Cache-Control': 'private, no-store' } });
+        return Response.json({ guest: false, user: { name: user.fullName || user.email.split('@')[0], email: user.email, admin: user.admin }, projects, evidence, experiments, missions, orders, applications, operations, capabilities: { ai: !!env.OPENAI_API_KEY, payments: !!env.STRIPE_SECRET_KEY && !!env.STRIPE_WEBHOOK_SECRET && env.SALES_ENABLED === 'true', adminConfigured: !!env.ADMIN_EMAILS }, currency: 'AUD' }, { headers: { 'Cache-Control': 'private, no-store' } });
     }
     catch (e) {
+        if (e instanceof HttpError && e.status === 401)
+            return Response.json({ guest: true, user: { name: 'Guest', email: '', admin: false }, projects: [], evidence: [], experiments: [], missions: [], orders: [], applications: [], operations: null, capabilities: { ai: false, payments: false, adminConfigured: false }, currency: 'AUD' }, { headers: { 'Cache-Control': 'private, no-store' } });
         if (e instanceof ProviderError)
             return Response.json({ error: e.message }, { status: 502 });
         return fail(e);

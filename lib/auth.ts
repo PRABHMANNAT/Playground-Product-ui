@@ -55,7 +55,10 @@ function createAuth() {
 let instance: ReturnType<typeof createAuth> | undefined;
 export async function getAuth() { await ensureDatabase(); return instance ??= createAuth(); }
 export async function currentUser() {
-  const result = await (await getAuth()).api.getSession({ headers: await headers() });
+  const requestHeaders = await headers();
+  // Public browsing needs neither a database nor auth credentials. Never trust identity headers.
+  if (!/(?:^|;\s*)(?:__Secure-)?better-auth\.session_token=/.test(requestHeaders.get('cookie') || '')) return null;
+  const result = await (await getAuth()).api.getSession({ headers: requestHeaders });
   return result ? { userId: result.user.id, email: result.user.email, fullName: result.user.name, emailVerified: result.user.emailVerified } : null;
 }
 export function safeReturnTo(value: string) {

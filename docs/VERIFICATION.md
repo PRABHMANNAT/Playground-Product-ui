@@ -7,13 +7,13 @@ This is a standard Next.js migration of the Playground pilot. The UI, business w
 - TypeScript check passes.
 - Next.js 16.4.3 production build passes without requiring provider credentials at build time.
 - Seven mocked OpenAI/Stripe provider tests pass.
-- Thirty-five real HTTP integration checks pass against the production Node.js server and an isolated local libSQL database.
+- Thirty-seven real HTTP integration checks pass against the production Node.js server and an isolated local libSQL database.
 - Browser: account creation, automatic workspace redirect, authenticated data loading and sign-out verified. No browser errors or warnings captured. The new account started with zero customer records.
 - Screenshots of the homepage and sign-in screen are in `docs/images`.
 
 ## Integration coverage
 
-Anonymous requests and forged former Sites identity headers cannot authenticate. Sign-up creates server sessions and hashed passwords. Sign-out invalidates sessions; signing back in retains project data. Separate accounts cannot read or change one another's projects. Foreign-origin writes, unsourced facts and unauthorized operator actions are rejected.
+Anonymous requests receive a public guest workspace with empty account collections; anonymous writes still require sign-in. Forged former Sites identity headers grant no account or operator access. Sign-up creates server sessions and hashed passwords. Sign-out invalidates sessions; signing back in retains project data. Separate accounts cannot read or change one another's projects. Foreign-origin writes, unsourced facts and unauthorized operator actions are rejected.
 
 An allowlisted email remains an ordinary account until verified. A verified allowlisted email receives Operations access. Parameterized SQL, transactional experiment generation, independent persistence reads and server-controlled AUD prices were exercised. Operators cannot fulfill unpaid orders. Missing OpenAI/payment keys produce explicit unavailable responses.
 
@@ -34,3 +34,7 @@ The initial SQL schema is created idempotently on first database access, not dur
 - Complete business-specific service/privacy terms before public paid onboarding.
 
 Provider handling is tested with mocks; authentication, API and data checks use real local services. No default account, API key, database file or test customer data is committed.
+
+## Public workspace update
+
+`/workspace` opens without a sign-in redirect. Guests can browse the archive and all public navigation, while customer records remain private. Saving and submitting requests lead to sign-in. Fresh anonymous browsing does not initialize the database or authentication provider. Browser verification confirmed the public archive and the sign-in prompt when saving. The provider tests, TypeScript check, production build and 37 account/data integration checks pass.
