@@ -8,7 +8,7 @@ body{font-size:14px;color:var(--ink)}
 .button svg,.text-link svg{transition:transform 180ms ease}.button:hover svg,.text-link:hover svg{transform:translate(2px,-1px)}
 .outline{border-color:#bdc8d4}.outline:hover{background:#f0f4f8;border-color:#7287a2}
 .text-link{font-size:12px}.pill{font-size:11px;border-radius:3px;padding:3px 8px;color:#535e6c;background:#f4f5f5;border-color:#dce1e6}
-.brand{font-size:25px;letter-spacing:-1px;font-weight:600}.brand-mark{transform:none;border-radius:0;background:#ff4500}
+.brand{font-size:25px;letter-spacing:-1px;font-weight:600}.brand-logo{display:block;width:32px;height:32px;flex-shrink:0;object-fit:contain}.brand.small .brand-logo{width:27px;height:27px}
 .public-header{height:80px;border-left:1px solid var(--border);border-right:1px solid var(--border);padding:0 4%;position:relative;z-index:3;background:#fdfdfb}
 .public-header nav{font-size:14px}.public-header .button{font-size:13px}
 .marketing{max-width:1440px}.hero{padding:76px 5%;gap:48px;min-height:600px;background-image:linear-gradient(90deg,transparent calc(50% - .5px),#d7dfe75c 50%,transparent calc(50% + .5px))}

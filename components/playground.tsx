@@ -1,8 +1,9 @@
 import { ArrowUpRight } from 'lucide-react';
+import Image from 'next/image';
 import { PixelArt } from './pixel-art';
 export function Brand({ small = false }: {
     small?: boolean;
-}) { return <a className={`brand ${small ? 'small' : ''}`} href="/" aria-label="Playground home"><span className="brand-mark"><i /><i /><i /><i /><i /><i /></span><span>playground</span></a>; }
+}) { return <a className={`brand ${small ? 'small' : ''}`} href="/" aria-label="Playground home"><Image className="brand-logo" src="/playground-logo.png" width={32} height={32} alt="" /><span>playground</span></a>; }
 export function Label({ children }: {
     children: React.ReactNode;
 }) { return <span className="eyebrow">{children}</span>; }
