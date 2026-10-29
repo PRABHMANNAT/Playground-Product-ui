@@ -77,6 +77,19 @@ export async function POST(req: Request) {
             await database.prepare('UPDATE experiments SET title=?,hypothesis=?,method=?,metric=?,threshold=? WHERE id=?').bind(e.title, e.hypothesis, e.method, e.metric, e.threshold, id).run();
             return Response.json({ ok: true });
         }
+        if (action === 'save_graveyard_evidence') {
+            const input = z.object({ project: z.string().uuid(), startup: z.string().uuid() }).parse(raw);
+            await projectFor(input.project, user);
+            const { getStartup, startupEvidence } = await import('@/lib/graveyard');
+            const record = getStartup(input.startup);
+            if (!record) throw new HttpError(404, 'Company record not found.');
+            const evidence = startupEvidence(record);
+            const validated = evidenceInput.parse({ ...evidence, project: input.project });
+            const id = uid();
+            await database.prepare('INSERT INTO evidence (id,project,kind,claim,source,source_title,origin,created) VALUES (?,?,?,?,?,?,?,?)')
+                .bind(id, input.project, validated.kind, validated.claim, validated.source, validated.sourceTitle, evidence.origin, now()).run();
+            return Response.json({ id }, { status: 201 });
+        }
         if (action === 'add_evidence') {
             const e = evidenceInput.parse(raw);
             await projectFor(e.project, user);

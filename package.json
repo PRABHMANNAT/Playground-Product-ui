@@ -14,6 +14,8 @@
     "db:setup": "node --env-file-if-exists=.env.local scripts/setup-database.mjs",
     "admin:verify": "node --env-file-if-exists=.env.local scripts/verify-admin.mjs",
     "test": "node --test scripts/test-providers.mjs",
+    "test:graveyard": "node --test scripts/test-graveyard.mjs",
+    "graveyard:import": "node scripts/import-graveyard.mjs",
     "test:integration": "node scripts/test-integration.mjs"
   },
   "dependencies": {

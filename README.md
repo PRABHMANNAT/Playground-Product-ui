@@ -2,6 +2,8 @@
 
 A workspace for researching a business idea, planning experiments, collecting expert feedback and recording a decision.
 
+The Startup Graveyard now integrates the [Startup Graveyard Database](https://github.com/PRABHMANNAT/Startup-Graveyard-Database): 4,778 company records, including 8 reviewed historical failures, with server-side search, status/country/industry filters, pagination, citations and project evidence saving. The upstream 8,000 figure is a collection target. See [integration and refresh instructions](docs/graveyard-integration.md) and [data attribution](data/graveyard/ATTRIBUTION.md).
+
 **This repository is the Vercel version.** It uses Next.js, Better Auth and Turso/libSQL. It includes the frontend, backend, database schema, account system, original illustrations, OpenAI research integration and Stripe Checkout integration.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FPRABHMANNAT%2FPlayground-Product-ui&env=TURSO_DATABASE_URL,TURSO_AUTH_TOKEN,BETTER_AUTH_SECRET&envDescription=Add%20your%20Turso%20database%20URL%2C%20database%20token%20and%20a%20random%20authentication%20secret%20of%20at%20least%2032%20characters.&envLink=https%3A%2F%2Fgithub.com%2FPRABHMANNAT%2FPlayground-Product-ui%23deploy-on-vercel&project-name=playground-product&repository-name=playground-product)

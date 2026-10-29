@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./refinement.css";
+import "./graveyard.css";
 export const metadata: Metadata = {
     title: "Playground — Build with evidence",
     description: "Investigate the past. Test the assumptions. Validate with people. A business validation workspace for founders and product teams.",
